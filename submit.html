@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Your Info | Paf.</title>
+    <meta name="description" content="Upload your CV and create your professional online presence in minutes.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'off-white': '#fafafa',
+                        'slate-deep': '#0f172a',
+                        'slate-card': '#1e293b'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .drop-zone {
+            transition: all 0.3s ease;
+        }
+
+        .drop-zone.dragover {
+            border-color: #f97316;
+            background-color: rgba(249, 115, 22, 0.1);
+            transform: scale(1.02);
+        }
+
+        .interest-row {
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-off-white dark:bg-slate-deep min-h-screen antialiased transition-colors duration-300">
+    <!-- Header -->
+    <nav
+        class="bg-white/80 dark:bg-slate-deep/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="text-xl font-bold text-slate-900 dark:text-white">Paf<span
+                        class="text-orange-500">.</span></a>
+                <button id="theme-toggle"
+                    class="p-2 rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
+                    aria-label="Toggle dark mode">
+                    <svg id="sun-icon" class="w-5 h-5 text-amber-500 dark:hidden" fill="currentColor"
+                        viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    <svg id="moon-icon" class="w-5 h-5 text-slate-300 hidden dark:block" fill="currentColor"
+                        viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-6 py-12">
+        <div class="text-center mb-12">
+            <h1 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">Submit Your Information</h1>
+            <p class="text-slate-600 dark:text-slate-300 max-w-xl mx-auto">Upload your CV and photo to get started.
+                We'll create your professional online presence in minutes.</p>
+        </div>
+
+        <form id="submission-form" class="space-y-8">
+            <!-- Section 1: Mandatory Uploads -->
+            <div
+                class="bg-white dark:bg-slate-card rounded-2xl p-8 shadow-lg border border-slate-200 dark:border-slate-700">
+                <h2 class="text-xl font-semibold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+                    <svg class="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                    Required Uploads
+                </h2>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- CV Upload -->
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Your CV (PDF
+                            only) <span class="text-red-500">*</span></label>
+                        <div id="cv-drop-zone"
+                            class="drop-zone relative border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-xl p-8 text-center cursor-pointer hover:border-orange-400 dark:hover:border-orange-500 transition-colors">
+                            <input type="file" id="cv-input" accept=".pdf"
+                                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                            <div id="cv-placeholder">
+                                <svg class="w-12 h-12 mx-auto text-slate-400 dark:text-slate-500 mb-3" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                <p class="text-slate-600 dark:text-slate-400 font-medium">Drag & drop your CV here</p>
+                                <p class="text-slate-400 dark:text-slate-500 text-sm mt-1">or click to browse (PDF only)
+                                </p>
+                            </div>
+                            <div id="cv-preview" class="hidden">
+                                <svg class="w-10 h-10 mx-auto text-green-500 mb-2" fill="currentColor"
+                                    viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                <p id="cv-filename" class="text-slate-700 dark:text-slate-300 font-medium truncate"></p>
+                                <button type="button" id="cv-remove"
+                                    class="text-red-500 hover:text-red-600 text-sm mt-2">Remove</button>
+                            </div>
+                        </div>
+                        <p id="cv-error" class="text-red-500 text-sm mt-2 hidden">Please upload your CV</p>
+                    </div>
+
+                    <!-- Photo Upload -->
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Professional
+                            Photo <span class="text-red-500">*</span></label>
+                        <div id="photo-drop-zone"
+                            class="drop-zone relative border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-xl p-8 text-center cursor-pointer hover:border-orange-400 dark:hover:border-orange-500 transition-colors">
+                            <input type="file" id="photo-input" accept="image/jpeg,image/png,image/jpg"
+                                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                            <div id="photo-placeholder">
+                                <svg class="w-12 h-12 mx-auto text-slate-400 dark:text-slate-500 mb-3" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <p class="text-slate-600 dark:text-slate-400 font-medium">Drag & drop your photo here
+                                </p>
+                                <p class="text-slate-400 dark:text-slate-500 text-sm mt-1">or click to browse (JPG/PNG)
+                                </p>
+                            </div>
+                            <div id="photo-preview" class="hidden flex flex-col items-center">
+                                <img id="photo-img" src="" alt="Preview"
+                                    class="w-20 h-20 rounded-full object-cover border-4 border-green-500 mb-2">
+                                <p id="photo-filename"
+                                    class="text-slate-700 dark:text-slate-300 font-medium text-sm truncate max-w-full">
+                                </p>
+                                <button type="button" id="photo-remove"
+                                    class="text-red-500 hover:text-red-600 text-sm mt-2">Remove</button>
+                            </div>
+                        </div>
+                        <p id="photo-error" class="text-red-500 text-sm mt-2 hidden">Please upload your photo</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Interests (Optional) -->
+            <div
+                class="bg-white dark:bg-slate-card rounded-2xl p-8 shadow-lg border border-slate-200 dark:border-slate-700">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-xl font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+                        <svg class="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                        Add Your Interests <span
+                            class="text-slate-400 dark:text-slate-500 font-normal text-base">(Optional)</span>
+                    </h2>
+                    <button type="button" id="add-interest-btn"
+                        class="inline-flex items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium rounded-lg transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                        Add Interest
+                    </button>
+                </div>
+
+                <div id="interests-container" class="space-y-4">
+                    <p id="no-interests" class="text-slate-500 dark:text-slate-400 text-center py-8">Click "Add
+                        Interest" to showcase your hobbies and passions</p>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button type="submit" id="submit-btn" disabled
+                    class="inline-flex items-center gap-3 px-10 py-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-semibold rounded-xl transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed hover:from-orange-600 hover:to-amber-600 hover:shadow-xl">
+                    <span>Submit & Create My Site</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                </button>
+                <p id="submit-error" class="text-red-500 text-sm mt-3 hidden">Please upload both your CV and photo to
+                    continue</p>
+            </div>
+        </form>
+    </main>
+
+    <!-- Interest Row Template -->
+    <template id="interest-template">
+        <div class="interest-row flex flex-col sm:flex-row gap-3 p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl">
+            <div class="flex-1">
+                <select
+                    class="interest-category w-full px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors">
+                    <option value="">Select Category</option>
+                    <option value="Sport">Sport</option>
+                    <option value="Music">Music</option>
+                    <option value="Video Games">Video Games</option>
+                    <option value="Hobbies">Hobbies</option>
+                    <option value="Tech">Tech</option>
+                    <option value="Art">Art</option>
+                    <option value="Travel">Travel</option>
+                    <option value="custom">Other/Custom...</option>
+                </select>
+                <input type="text"
+                    class="custom-category hidden w-full mt-2 px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-700 dark:text-slate-200 placeholder-slate-400 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
+                    placeholder="Enter custom category">
+            </div>
+            <div class="flex-[2]">
+                <input type="text"
+                    class="interest-detail w-full px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-700 dark:text-slate-200 placeholder-slate-400 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
+                    placeholder="Describe your interest (e.g. Tennis, Captain of University Team)">
+            </div>
+            <button type="button"
+                class="remove-interest self-start p-2.5 text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                title="Remove">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+            </button>
+        </div>
+    </template>
+
+    <script>
+        // Theme Toggle
+        const html = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        if (savedTheme === 'dark') html.classList.add('dark');
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+        });
+
+        // File Upload Handling
+        let cvFile = null;
+        let photoFile = null;
+
+        function setupDropZone(dropZoneId, inputId, placeholderId, previewId, filenameId, removeId, errorId, fileType, onFileChange) {
+            const dropZone = document.getElementById(dropZoneId);
+            const input = document.getElementById(inputId);
+            const placeholder = document.getElementById(placeholderId);
+            const preview = document.getElementById(previewId);
+            const filename = document.getElementById(filenameId);
+            const removeBtn = document.getElementById(removeId);
+            const error = document.getElementById(errorId);
+
+            ['dragenter', 'dragover'].forEach(e => dropZone.addEventListener(e, () => dropZone.classList.add('dragover')));
+            ['dragleave', 'drop'].forEach(e => dropZone.addEventListener(e, () => dropZone.classList.remove('dragover')));
+
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                const file = e.dataTransfer.files[0];
+                if (file) handleFile(file);
+            });
+
+            input.addEventListener('change', (e) => {
+                if (e.target.files[0]) handleFile(e.target.files[0]);
+            });
+
+            removeBtn.addEventListener('click', () => {
+                input.value = '';
+                placeholder.classList.remove('hidden');
+                preview.classList.add('hidden');
+                error.classList.add('hidden');
+                onFileChange(null);
+                validateForm();
+            });
+
+            function handleFile(file) {
+                if (fileType === 'pdf' && file.type !== 'application/pdf') {
+                    alert('Please upload a PDF file');
+                    return;
+                }
+                if (fileType === 'image' && !['image/jpeg', 'image/png', 'image/jpg'].includes(file.type)) {
+                    alert('Please upload a JPG or PNG image');
+                    return;
+                }
+                filename.textContent = file.name;
+                placeholder.classList.add('hidden');
+                preview.classList.remove('hidden');
+                error.classList.add('hidden');
+
+                if (fileType === 'image') {
+                    const reader = new FileReader();
+                    reader.onload = (e) => document.getElementById('photo-img').src = e.target.result;
+                    reader.readAsDataURL(file);
+                }
+
+                onFileChange(file);
+                validateForm();
+            }
+        }
+
+        setupDropZone('cv-drop-zone', 'cv-input', 'cv-placeholder', 'cv-preview', 'cv-filename', 'cv-remove', 'cv-error', 'pdf', (f) => cvFile = f);
+        setupDropZone('photo-drop-zone', 'photo-input', 'photo-placeholder', 'photo-preview', 'photo-filename', 'photo-remove', 'photo-error', 'image', (f) => photoFile = f);
+
+        // Form Validation
+        const submitBtn = document.getElementById('submit-btn');
+        const submitError = document.getElementById('submit-error');
+        const cvError = document.getElementById('cv-error');
+        const photoError = document.getElementById('photo-error');
+
+        function validateForm() {
+            const isValid = cvFile && photoFile;
+            submitBtn.disabled = !isValid;
+            submitError.classList.toggle('hidden', isValid);
+            return isValid;
+        }
+
+        // Interests Management
+        const addInterestBtn = document.getElementById('add-interest-btn');
+        const interestsContainer = document.getElementById('interests-container');
+        const noInterests = document.getElementById('no-interests');
+        const interestTemplate = document.getElementById('interest-template');
+
+        addInterestBtn.addEventListener('click', () => {
+            noInterests.classList.add('hidden');
+            const clone = interestTemplate.content.cloneNode(true);
+            const row = clone.querySelector('.interest-row');
+            const categorySelect = clone.querySelector('.interest-category');
+            const customInput = clone.querySelector('.custom-category');
+            const removeBtn = clone.querySelector('.remove-interest');
+
+            categorySelect.addEventListener('change', () => {
+                customInput.classList.toggle('hidden', categorySelect.value !== 'custom');
+                if (categorySelect.value === 'custom') customInput.focus();
+            });
+
+            removeBtn.addEventListener('click', () => {
+                row.style.animation = 'slideIn 0.2s ease reverse';
+                setTimeout(() => {
+                    row.remove();
+                    if (interestsContainer.querySelectorAll('.interest-row').length === 0) {
+                        noInterests.classList.remove('hidden');
+                    }
+                }, 200);
+            });
+
+            interestsContainer.appendChild(clone);
+        });
+
+        // Form Submission
+        document.getElementById('submission-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            cvError.classList.toggle('hidden', !!cvFile);
+            photoError.classList.toggle('hidden', !!photoFile);
+
+            if (!validateForm()) {
+                submitError.classList.remove('hidden');
+                return;
+            }
+
+            // Collect interests
+            const interests = [];
+            interestsContainer.querySelectorAll('.interest-row').forEach(row => {
+                const categorySelect = row.querySelector('.interest-category');
+                const customInput = row.querySelector('.custom-category');
+                const detailInput = row.querySelector('.interest-detail');
+                const category = categorySelect.value === 'custom' ? customInput.value : categorySelect.value;
+                const detail = detailInput.value;
+                if (category || detail) interests.push({ category, detail });
+            });
+
+            console.log('Form Data:', { cv: cvFile, photo: photoFile, interests });
+            alert('Form submitted successfully! Check the console for data.');
+        });
+    </script>
+</body>
+
+</html>
