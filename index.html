@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paf. | Turn Your PDF Resume into a Professional Website</title>
+    <title>folio. | Turn Your PDF Resume into a Professional Website</title>
     <meta name="description"
         content="Transform your PDF CV into a stunning personal portfolio website. Perfect for students seeking internships and first jobs. Professional, affordable, done for you.">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pocketbase@0.21.1/dist/pocketbase.umd.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
@@ -162,15 +163,26 @@
         class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-slate-deep/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-700">
         <div class="max-w-6xl mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
-                <a href="#" class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">
-                    Paf<span class="text-orange-500 dark:text-orange-400">.</span>
+                <a href="#" class="flex items-center gap-2">
+                    <!-- Stacked Layers Icon -->
+                    <svg class="h-10 w-10" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 8L4 16L20 24L36 16L20 8Z" fill="#e2e8f0" class="dark:fill-slate-300" />
+                        <path d="M20 12L4 20L20 28L36 20L20 12Z" fill="#cbd5e1" class="dark:fill-slate-400" />
+                        <path d="M20 16L4 24L20 32L36 24L20 16Z" fill="#94a3b8" class="dark:fill-slate-500" />
+                        <path d="M22 6L28 12L22 10L16 14L22 6Z" fill="#f97316" />
+                    </svg>
+                    <span class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">folio<span
+                            class="text-orange-500">.</span></span>
                 </a>
                 <div class="flex items-center gap-6">
                     <a href="#how-it-works" data-i18n="navHow"
                         class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">How
                         it works</a>
                     <a href="#pricing" data-i18n="navPricing"
-                        class="px-4 py-2 bg-gradient-to-r from-orange-500 to-amber-500 text-white text-sm font-semibold rounded-lg hover:from-orange-600 hover:to-amber-600 transition-all shadow-md">Pricing</a>
+                        class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">Pricing</a>
+                    <a href="#submit" data-i18n="navGetStarted"
+                        class="px-4 py-2 bg-gradient-to-r from-orange-500 to-amber-500 text-white text-sm font-semibold rounded-lg hover:from-orange-600 hover:to-amber-600 transition-all shadow-md">Get
+                        Started</a>
                     <!-- Language Toggle -->
                     <button id="lang-toggle"
                         class="flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-slate-300 dark:border-slate-600 rounded-lg transition-colors"
@@ -239,9 +251,6 @@
                                 d="M17 8l4 4m0 0l-4 4m4-4H3" />
                         </svg>
                     </button>
-                    <a href="#how-it-works" data-i18n="heroLink"
-                        class="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors">See
-                        how it works →</a>
                 </div>
                 <div class="flex items-center justify-center gap-6 mt-12 text-sm text-slate-500 dark:text-slate-400">
                     <div class="flex items-center gap-2"><svg class="w-5 h-5 text-green-500" fill="currentColor"
@@ -556,41 +565,46 @@
                                 <path fill-rule="evenodd"
                                     d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                                     clip-rule="evenodd" />
-                            </svg><span class="text-slate-700 dark:text-slate-300">Custom-designed portfolio
-                                website</span></li>
+                            </svg><span data-i18n="feature1" class="text-slate-700 dark:text-slate-300">Custom-designed
+                                portfolio website</span></li>
                         <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0"
                                 fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd"
                                     d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                                     clip-rule="evenodd" />
-                            </svg><span class="text-slate-700 dark:text-slate-300">Mobile & desktop responsive</span>
+                            </svg><span data-i18n="feature2" class="text-slate-700 dark:text-slate-300">Mobile & desktop
+                                responsive</span>
                         </li>
                         <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0"
                                 fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd"
                                     d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                                     clip-rule="evenodd" />
-                            </svg><span class="text-slate-700 dark:text-slate-300">Shareable personal URL</span></li>
+                            </svg><span data-i18n="feature3" class="text-slate-700 dark:text-slate-300">Shareable
+                                personal URL</span></li>
                         <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0"
                                 fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd"
                                     d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                                     clip-rule="evenodd" />
-                            </svg><span class="text-slate-700 dark:text-slate-300">Free hosting included (1 year)</span>
+                            </svg><span data-i18n="feature4" class="text-slate-700 dark:text-slate-300">Free hosting
+                                included (1 year)</span>
                         </li>
                         <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0"
                                 fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd"
                                     d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                                     clip-rule="evenodd" />
-                            </svg><span class="text-slate-700 dark:text-slate-300">5-minute delivery guarantee</span>
+                            </svg><span data-i18n="feature5" class="text-slate-700 dark:text-slate-300">5-minute
+                                delivery guarantee</span>
                         </li>
                         <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0"
                                 fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd"
                                     d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                                     clip-rule="evenodd" />
-                            </svg><span class="text-slate-700 dark:text-slate-300">1 free revision per month</span></li>
+                            </svg><span data-i18n="feature6" class="text-slate-700 dark:text-slate-300">1 free revision
+                                per month</span></li>
                     </ul>
                     <button onclick="openModal()"
                         class="w-full py-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-semibold rounded-xl hover:from-orange-600 hover:to-amber-600 transition-all shadow-lg"><span
@@ -610,12 +624,14 @@
     <section id="submit" class="py-24 bg-off-white dark:bg-slate-deep">
         <div class="max-w-4xl mx-auto px-6">
             <div class="text-center mb-12">
-                <span class="text-sm font-semibold text-orange-500 dark:text-orange-400 uppercase tracking-wider">Get
+                <span data-i18n="formLabel"
+                    class="text-sm font-semibold text-orange-500 dark:text-orange-400 uppercase tracking-wider">Get
                     Started</span>
-                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mt-3 mb-4">Submit Your
+                <h2 data-i18n="formTitle"
+                    class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mt-3 mb-4">Submit Your
                     Information</h2>
-                <p class="text-lg text-slate-600 dark:text-slate-300 max-w-xl mx-auto">Upload your CV and photo to get
-                    started. We'll create your professional online presence in minutes.</p>
+                <p data-i18n="formDesc" class="text-lg text-slate-600 dark:text-slate-300 max-w-xl mx-auto">Upload your
+                    CV and photo to get started. We'll create your professional online presence in minutes.</p>
             </div>
 
             <form id="submission-form" class="space-y-8">
@@ -627,7 +643,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                         </svg>
-                        Required Uploads
+                        <span data-i18n="formUploadsTitle">Required Uploads</span>
                     </h3>
                     <div class="grid md:grid-cols-2 gap-6">
                         <!-- CV Upload -->
@@ -784,9 +800,17 @@
     <footer class="py-12 bg-slate-50 dark:bg-slate-deep border-t border-slate-200 dark:border-slate-700">
         <div class="max-w-6xl mx-auto px-6">
             <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-                <a href="#" class="text-lg font-bold text-slate-900 dark:text-white">Paf<span
-                        class="text-orange-500 dark:text-orange-400">.</span></a>
-                <p class="text-sm text-slate-500 dark:text-slate-400">© 2026 Paf. All rights reserved.</p>
+                <a href="#" class="flex items-center gap-2">
+                    <svg class="h-8 w-8" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 8L4 16L20 24L36 16L20 8Z" fill="#e2e8f0" class="dark:fill-slate-300" />
+                        <path d="M20 12L4 20L20 28L36 20L20 12Z" fill="#cbd5e1" class="dark:fill-slate-400" />
+                        <path d="M20 16L4 24L20 32L36 24L20 16Z" fill="#94a3b8" class="dark:fill-slate-500" />
+                        <path d="M22 6L28 12L22 10L16 14L22 6Z" fill="#f97316" />
+                    </svg>
+                    <span class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">folio<span
+                            class="text-orange-500">.</span></span>
+                </a>
+                <p class="text-sm text-slate-500 dark:text-slate-400">© 2026 folio. All rights reserved.</p>
                 <a href="mailto:contact@paf.com"
                     class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-orange-500 dark:hover:text-orange-400 transition-colors">Contact
                     Us</a>
@@ -941,6 +965,7 @@
         const translations = {
             en: {
                 navHow: 'How it works',
+                navGetStarted: 'Get Started',
                 navPricing: 'Pricing',
                 heroBadge: 'Built for students, by professionals',
                 heroTitle: 'Stop Sending PDFs.',
@@ -948,7 +973,6 @@
                 heroSubtitle: 'Look credible instantly with a professional online presence. Ready in 5 minutes.',
                 heroStat: 'Only 7% of applicants have<br>a personal website. <strong>Be one of them.</strong>',
                 heroCta: 'Get Your Website — 15€',
-                heroLink: 'See how it works →',
                 trust1: '5 min Delivery',
                 trust2: 'Fully Responsive',
                 trust3: 'Hosted Free',
@@ -980,11 +1004,19 @@
                 feature5: '5-minute delivery guarantee',
                 feature6: '1 free revision per month',
                 orderBtn: 'Order Now',
+                formLabel: 'Get Started',
+                formTitle: 'Submit Your Information',
+                formDesc: "Upload your CV and photo to get started. We'll create your professional online presence in minutes.",
+                formUploadsTitle: 'Required Uploads',
+                formInterestsTitle: 'Add Your Interests',
+                formInterestsOptional: '(Optional)',
+                formSubmitBtn: 'Submit & Create My Site',
                 footerCopy: '© 2026 Paf. All rights reserved.',
                 footerContact: 'Contact Us'
             },
             fr: {
                 navHow: 'Comment ça marche',
+                navGetStarted: 'Commencer',
                 navPricing: 'Tarifs',
                 heroBadge: 'Conçu pour les étudiants, par des pros',
                 heroTitle: 'Arrêtez d\'envoyer des PDFs.',
@@ -1024,6 +1056,13 @@
                 feature5: 'Livraison garantie en 5 min',
                 feature6: '1 révision gratuite par mois',
                 orderBtn: 'Commander',
+                formLabel: 'Commencer',
+                formTitle: 'Envoyez vos informations',
+                formDesc: 'Uploadez votre CV et photo pour commencer. Nous créons votre présence en ligne pro en quelques minutes.',
+                formUploadsTitle: 'Documents requis',
+                formInterestsTitle: "Ajoutez vos centres d'intérêt",
+                formInterestsOptional: '(Optionnel)',
+                formSubmitBtn: 'Envoyer & Créer mon site',
                 footerCopy: '© 2026 Paf. Tous droits réservés.',
                 footerContact: 'Nous contacter'
             }
@@ -1159,10 +1198,15 @@
             });
         }
 
+        // PocketBase Integration
+        // TODO: Replace with your actual PocketBase URL after setup
+        const POCKETBASE_URL = 'https://YOUR_VPS_DOMAIN:8090'; // Change this!
+        const pb = new PocketBase(POCKETBASE_URL);
+
         // Form Submission
         const submissionForm = document.getElementById('submission-form');
         if (submissionForm) {
-            submissionForm.addEventListener('submit', (e) => {
+            submissionForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 if (cvError) cvError.classList.toggle('hidden', !!cvFile);
                 if (photoError) photoError.classList.toggle('hidden', !!photoFile);
@@ -1183,8 +1227,42 @@
                     if (category || detail) interests.push({ category, detail });
                 });
 
-                console.log('Form Data:', { cv: cvFile, photo: photoFile, interests });
-                alert('Form submitted successfully! We will create your site shortly.');
+                // Show loading state
+                const originalBtnText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<span>Submitting...</span>';
+                submitBtn.disabled = true;
+
+                try {
+                    // Create FormData for PocketBase
+                    const formData = new FormData();
+                    formData.append('full_name', 'Website Visitor'); // You can add a name field later
+                    formData.append('email', 'pending@folio.com'); // You can add an email field later
+                    formData.append('interests', JSON.stringify(interests));
+                    formData.append('cv_file', cvFile);
+                    formData.append('photo_file', photoFile);
+
+                    // Send to PocketBase
+                    const record = await pb.collection('applications').create(formData);
+                    console.log('Success! Record ID:', record.id);
+
+                    // Success - reset form
+                    alert('🎉 Application submitted successfully! We will create your site shortly.');
+                    submissionForm.reset();
+                    cvFile = null;
+                    photoFile = null;
+                    document.getElementById('cv-placeholder').classList.remove('hidden');
+                    document.getElementById('cv-preview').classList.add('hidden');
+                    document.getElementById('photo-placeholder').classList.remove('hidden');
+                    document.getElementById('photo-preview').classList.add('hidden');
+                    validateForm();
+
+                } catch (error) {
+                    console.error('Submission failed:', error);
+                    alert('❌ Submission failed: ' + (error.message || 'Please try again later'));
+                } finally {
+                    submitBtn.innerHTML = originalBtnText;
+                    submitBtn.disabled = false;
+                }
             });
         }
     </script>
