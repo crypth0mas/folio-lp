@@ -1209,12 +1209,9 @@
                         formData.append('interests', JSON.stringify(interests));
                     }
 
-                    // Send to API
-                    const response = await fetch('http://51.77.144.120:3000/api/sites', {
+                    // Send to API via Vercel proxy (bypasses HTTPS → HTTP restriction)
+                    const response = await fetch('/api/submit', {
                         method: 'POST',
-                        headers: {
-                            'Authorization': 'Bearer GHbzddSZdzVYU66AGgudzg-vVTZvuiv'
-                        },
                         body: formData
                     });
 
