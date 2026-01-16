@@ -8,7 +8,6 @@
     <meta name="description"
         content="Transform your PDF CV into a stunning personal portfolio website. Perfect for students seeking internships and first jobs. Professional, affordable, done for you.">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/pocketbase@0.21.1/dist/pocketbase.umd.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
@@ -761,30 +760,11 @@
 
     <!-- Interest Row Template -->
     <template id="interest-template">
-        <div class="interest-row flex flex-col sm:flex-row gap-3 p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl"
+        <div class="interest-row flex gap-3 p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl"
             style="animation: slideIn 0.3s ease;">
-            <div class="flex-1">
-                <select
-                    class="interest-category w-full px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors">
-                    <option value="">Select Category</option>
-                    <option value="Sport">Sport</option>
-                    <option value="Music">Music</option>
-                    <option value="Video Games">Video Games</option>
-                    <option value="Hobbies">Hobbies</option>
-                    <option value="Tech">Tech</option>
-                    <option value="Art">Art</option>
-                    <option value="Travel">Travel</option>
-                    <option value="custom">Other/Custom...</option>
-                </select>
-                <input type="text"
-                    class="custom-category hidden w-full mt-2 px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-700 dark:text-slate-200 placeholder-slate-400 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
-                    placeholder="Enter custom category">
-            </div>
-            <div class="flex-[2]">
-                <input type="text"
-                    class="interest-detail w-full px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-700 dark:text-slate-200 placeholder-slate-400 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
-                    placeholder="Describe your interest (e.g. Tennis, Captain of University Team)">
-            </div>
+            <input type="text"
+                class="interest-input flex-1 px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-700 dark:text-slate-200 placeholder-slate-400 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
+                placeholder="e.g. Tennis, Captain of University Team">
             <button type="button"
                 class="remove-interest self-start p-2.5 text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
                 title="Remove">
@@ -1164,7 +1144,7 @@
             return isValid;
         }
 
-        // Interests Management
+        // Interests Management - simplified (no category)
         const addInterestBtn = document.getElementById('add-interest-btn');
         const interestsContainer = document.getElementById('interests-container');
         const noInterests = document.getElementById('no-interests');
@@ -1175,14 +1155,7 @@
                 noInterests.classList.add('hidden');
                 const clone = interestTemplate.content.cloneNode(true);
                 const row = clone.querySelector('.interest-row');
-                const categorySelect = clone.querySelector('.interest-category');
-                const customInput = clone.querySelector('.custom-category');
                 const removeBtn = clone.querySelector('.remove-interest');
-
-                categorySelect.addEventListener('change', () => {
-                    customInput.classList.toggle('hidden', categorySelect.value !== 'custom');
-                    if (categorySelect.value === 'custom') customInput.focus();
-                });
 
                 removeBtn.addEventListener('click', () => {
                     row.style.animation = 'slideIn 0.2s ease reverse';
@@ -1198,12 +1171,7 @@
             });
         }
 
-        // PocketBase Integration
-        // TODO: Replace with your actual PocketBase URL after setup
-        const POCKETBASE_URL = 'https://YOUR_VPS_DOMAIN:8090'; // Change this!
-        const pb = new PocketBase(POCKETBASE_URL);
-
-        // Form Submission
+        // Form Submission with new API
         const submissionForm = document.getElementById('submission-form');
         if (submissionForm) {
             submissionForm.addEventListener('submit', async (e) => {
@@ -1216,15 +1184,13 @@
                     return;
                 }
 
-                // Collect interests
+                // Collect interests as array of strings
                 const interests = [];
                 interestsContainer.querySelectorAll('.interest-row').forEach(row => {
-                    const categorySelect = row.querySelector('.interest-category');
-                    const customInput = row.querySelector('.custom-category');
-                    const detailInput = row.querySelector('.interest-detail');
-                    const category = categorySelect.value === 'custom' ? customInput.value : categorySelect.value;
-                    const detail = detailInput.value;
-                    if (category || detail) interests.push({ category, detail });
+                    const input = row.querySelector('.interest-input');
+                    if (input && input.value.trim()) {
+                        interests.push(input.value.trim());
+                    }
                 });
 
                 // Show loading state
@@ -1233,17 +1199,31 @@
                 submitBtn.disabled = true;
 
                 try {
-                    // Create FormData for PocketBase
+                    // Create FormData for API
                     const formData = new FormData();
-                    formData.append('full_name', 'Website Visitor'); // You can add a name field later
-                    formData.append('email', 'pending@folio.com'); // You can add an email field later
-                    formData.append('interests', JSON.stringify(interests));
-                    formData.append('cv_file', cvFile);
-                    formData.append('photo_file', photoFile);
+                    formData.append('cv', cvFile);
+                    formData.append('photo', photoFile);
 
-                    // Send to PocketBase
-                    const record = await pb.collection('applications').create(formData);
-                    console.log('Success! Record ID:', record.id);
+                    // Add interests as JSON string (if any)
+                    if (interests.length > 0) {
+                        formData.append('interests', JSON.stringify(interests));
+                    }
+
+                    // Send to API
+                    const response = await fetch('http://51.77.144.120:3000/api/sites', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': 'Bearer GHbzddSZdzVYU66AGgudzg-vVTZvuiv'
+                        },
+                        body: formData
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`Server error: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    console.log('Success!', result);
 
                     // Success - reset form
                     alert('🎉 Application submitted successfully! We will create your site shortly.');
@@ -1254,6 +1234,11 @@
                     document.getElementById('cv-preview').classList.add('hidden');
                     document.getElementById('photo-placeholder').classList.remove('hidden');
                     document.getElementById('photo-preview').classList.add('hidden');
+
+                    // Clear interests
+                    interestsContainer.querySelectorAll('.interest-row').forEach(row => row.remove());
+                    noInterests.classList.remove('hidden');
+
                     validateForm();
 
                 } catch (error) {
